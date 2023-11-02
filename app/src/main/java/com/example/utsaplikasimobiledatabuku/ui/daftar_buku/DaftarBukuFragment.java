@@ -32,11 +32,9 @@ public class DaftarBukuFragment extends Fragment {
     private List<DataBuku> results = new ArrayList<>();
     private BukuAdapter viewAdapter;
     RecyclerView recyclerView;
-    ImageButton btndelete;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_daftar_buku,container,false);
-        btndelete = view.findViewById(R.id.BtnDelete);
         viewAdapter = new BukuAdapter(getContext(),results);
         recyclerView = view.findViewById(R.id.rvBookList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
