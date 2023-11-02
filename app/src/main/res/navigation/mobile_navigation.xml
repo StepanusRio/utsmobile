@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_input_buku">
+
+    <fragment
+        android:id="@+id/navigation_input_buku"
+        android:name="com.example.utsaplikasimobiledatabuku.ui.input_buku.InputBukuFragment"
+        android:label="@string/title_input"
+        tools:layout="@layout/fragment_input_buku" />
+
+    <fragment
+        android:id="@+id/navigation_daftar"
+        android:name="com.example.utsaplikasimobiledatabuku.ui.daftar_buku.DaftarBukuFragment"
+        android:label="@string/title_buku"
+        tools:layout="@layout/fragment_daftar_buku" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.example.utsaplikasimobiledatabuku.ui.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>
