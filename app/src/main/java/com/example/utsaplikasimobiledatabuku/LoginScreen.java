@@ -1,11 +1,13 @@
 package com.example.utsaplikasimobiledatabuku;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.utsaplikasimobiledatabuku.API.LoginAPI;
 import com.example.utsaplikasimobiledatabuku.API.ServerAPI;
+import com.example.utsaplikasimobiledatabuku.ui.profile.ProfileFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONException;
@@ -39,7 +42,6 @@ public class LoginScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
         getSupportActionBar().hide();
-
 
         BtnLogin = (Button) findViewById(R.id.btnLogin);
         EtEmail = (TextInputEditText) findViewById(R.id.EtEmail);
@@ -68,6 +70,12 @@ public class LoginScreen extends AppCompatActivity {
 
             msg.setMessage("Email tidak Valid").setNegativeButton("Retry",null)
                     .create().show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    msg.create().dismiss();
+                }
+            }, 3000);
             return;
         }
         api.login(temail,tpassword).enqueue(new Callback<ResponseBody>() {
@@ -78,8 +86,6 @@ public class LoginScreen extends AppCompatActivity {
                     if (json.getString("status").equals("1")) {
                         Toast.makeText(LoginScreen.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
                         AlertDialog.Builder msg = new AlertDialog.Builder(LoginScreen.this);
-                        msg.setMessage("Login berhasil")
-                                .setPositiveButton("Ok",null).create().show();
                         Intent intent = new Intent(LoginScreen.this,MainActivity.class);
                         intent.putExtra("username",json.getJSONObject("data").getString("username"));
                         intent.putExtra("email",json.getJSONObject("data").getString("email"));
@@ -92,6 +98,12 @@ public class LoginScreen extends AppCompatActivity {
                                 .setNegativeButton("Retry",null).create().show();
                         EtEmail.setText("");
                         EtPassword.setText("");
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                msg.create().dismiss();
+                            }
+                        }, 3000);
                     }
                     pd.dismiss();
                 } catch (IOException | JSONException e) {
@@ -102,6 +114,13 @@ public class LoginScreen extends AppCompatActivity {
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                     Log.i("Info Login", "onFailure: Login Gagal"+t.toString());
                     pd.dismiss();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            AlertDialog.Builder msg = new AlertDialog.Builder(LoginScreen.this);
+                            msg.setMessage("Login gagal").setNegativeButton("Retry", null).create().show();
+                        }
+                    }, 3000);
             }
         });
     }
